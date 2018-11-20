@@ -1,0 +1,30 @@
+createdAt: "2018-11-18T17:11:37.676Z"
+updatedAt: "2018-11-18T17:19:49.705Z"
+type: "MARKDOWN_NOTE"
+folder: "215fa5a16133e660c7c9"
+title: "What is Docker?"
+content: '''
+  # What is Docker?
+  
+    
+  *  Docker is a platform for creating and running containers
+  *  Docker for Desktop (Mac/Windows) installs Docker Server (also called Docker Daemon), which is the underlying program used to create images and run containers, and also installs a cli tool called Docker Client that is used to interact with Docker Server
+  
+  *   Docker for Desktop runs on a Linux VM in order to facilitate the image/container abilities (namespacing and creating control groups)
+  
+  ###### Image
+  
+  * An image is a file that contains all of the dependencies and configuration required in order to run a program 
+  * Two parts: a file system snapshot and a startup command
+    *   The file system snapshot is just a copy of a set of files/directories
+  
+  ###### Container
+  
+  *   A container is an instance of an image that runs a program
+  *   It has its own isolated set of hardware resources
+  *   This includes a segment of the hard drive (namespace) as well as a portion of the computers resources (control group), including memory, CPU, network resources, etc.
+  *   When creating a container, the computer (kernel) isolates a set of hardware resources, and then copies the file system snapshot into the section of the hard drive for this container. Then the startup command is run
+'''
+tags: []
+isStarred: false
+isTrashed: false

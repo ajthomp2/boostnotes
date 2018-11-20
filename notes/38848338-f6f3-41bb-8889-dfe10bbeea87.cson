@@ -1,0 +1,122 @@
+createdAt: "2018-11-18T17:19:58.626Z"
+updatedAt: "2018-11-20T15:26:31.496Z"
+type: "MARKDOWN_NOTE"
+folder: "215fa5a16133e660c7c9"
+title: "The Docker Client"
+content: '''
+  # The Docker Client
+  The Docker Client is the cli tool that runs on top of the Docker Server (daemon) and is the main way you *interact* with Docker
+  
+  ---
+  
+  ```bash
+  $  docker create <image-name>
+  ```
+  Creates the image *image-name*, which means that the hardware resources are partitioned and the file system snapshot is copied to that partition, but the startup command is not run
+  
+  ---
+  
+  ```bash
+  $  docker start <container-id>
+  ```
+  Starts the container *container-id* that has been already created. Once you've started a container, you can stop and start it back up again, but the startup command is set
+   * `-a` flag: send the container's output to your terminal, which is the default option when running `docker run`
+  
+  ---
+  
+  ```bash
+  $  docker run <image-name> [startup-command]
+  ```
+  Runs the image *image-name*, which creates a container based on the image and starts the program that the image runs. If you type a command after the image name, that command will be run instead of the normal image startup command.  `docker run` is equivalent to running `docker create` followed by `docker start`. 
+    * `-it` flag: connects your terminal's STDIN and STDOUT to the containers STDIN and STDOUT so you can enter and see the responses from commands.
+    * `-p <localhost-port>:<container-port>` flag: route incoming requests on the port *localhost-port* to the port in the container *container-port*
+  
+  ---
+  
+  ```bash
+  $  docker stop <container-id>
+  ```
+  Stops a running container.  Sends the SIGTERM signal to the primary running process in the container.  Many processes listen for this signal and perform some cleanup before shutting down.  If the container does not stop after 10 sec, Docker will automatically send the SIGKILL signal killing the process.
+  
+  ---
+  
+  ```bash
+  $  docker kill <container-id>
+  ```
+  Also stops the running container, but sends the SIGKILL signal to the primary running process in the container.  Rarely used because `docker stop` will automatically send this signal anyway.
+  
+  ---
+  
+  ```bash
+  $  docker exec -it <container-id> <command>
+  ```
+  Runs the command on the running container *container-id*. The *command* `sh` will run the terminal inside the container.
+  
+  ---
+  
+  ```bash
+  $  docker build <directory>
+  ```
+  Builds an image based on a dockerfile and the files in *directory*.  The directory is called the build context.
+    * `-t <docker-id>/<project-name>:version` flag: tags the new image as *your-docker-id/project:version*.  When running the image, you can leave off the version.  If you don't specify a version, it will automatically be *latest*
+  
+  ---
+  
+  ```bash
+  $  docker commit -c 'CMD ["<startup-command>"]' <container-id>
+  ```
+  Creates an image out of the running container *container-id* with the startup command *startup-command*.
+  
+  ---
+  
+  ```bash
+  $  docker logs <container-id>
+  ```
+  Prints the output from the container *container-id* to your console.  This does not start/restart/run a container, but just prints the output that has already occurred.
+  
+  ---
+  
+  ```bash
+  $  docker ps
+  ```
+  Lists all running Docker containers. 
+    * `--all` flag: lists all running and stopped containers
+  
+  ---
+  
+  ```bash
+  $  docker system prune
+  ```
+  Deletes stopped containers, cached images, and a few other things that can take up space on your computer.  Should only really be run if you are done using Docker for a while/forever
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false

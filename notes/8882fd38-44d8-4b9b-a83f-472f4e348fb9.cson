@@ -1,0 +1,72 @@
+createdAt: "2018-11-18T20:35:41.905Z"
+updatedAt: "2018-11-20T19:45:45.582Z"
+type: "MARKDOWN_NOTE"
+folder: "215fa5a16133e660c7c9"
+title: "Creating Docker Images"
+content: '''
+  # Creating Docker Images
+  
+  A Docker image is created using a Dockerfile, which we will pass to the Docker Server using the Docker Client, and the Docker Server will create an image based on that file
+  
+  ### Dockerfile
+  
+  A Dockerfile is the file that Docker uses to create an image.  Below are the commands (language syntax) that is used to create Dockerfiles
+  
+  ##### Example
+  
+  ```Dockerfile
+  # base image
+  FROM node:alpine
+  
+  # set working directory
+  WORKDIR /app
+  
+  # install dependencies
+  COPY ./package.json .
+  RUN npm install
+  
+  # copy remaining files
+  COPY . .
+  
+  # set startup command
+  CMD \\["npm", "start"\\]
+  ```
+  
+  ##### Commands
+  
+  ```Dockerfile
+  FROM <base-image>
+  ```
+  Indicates the base image to use in order to create your new image.
+  
+  ---
+  
+  ```Dockerfile
+  WORKDIR <path-to-directory>
+  ```
+  Sets the working directory *path-to-directory* in your Docker container.  This means that any commands following this will be relative to this directory .  If this directory doesn't exist, it will be created for us.
+  
+  ---
+  
+  ```Dockerfile
+  COPY <local-relative-path> <dest-relative-path>
+  ```
+  Copies the files in the *local-relative-path* directory, which is relative to your build context into directory specified by *dest-relative-path*, which is relative to the container's home directory.
+  
+  ---
+  
+  ```Dockerfile
+  RUN <command>
+  ```
+  Run a command in order to help setup the image environment during its creation.
+  
+  ---
+  
+  ```Dockerfile
+  CMD ["<command>", "<arguments>"]
+  ```
+  The startup command to run with the specified arguments.
+'''
+tags: []
+isStarred: false
+isTrashed: false

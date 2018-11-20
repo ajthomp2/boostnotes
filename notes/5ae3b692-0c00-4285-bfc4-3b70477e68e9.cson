@@ -1,0 +1,85 @@
+createdAt: "2018-11-20T19:23:44.128Z"
+updatedAt: "2018-11-20T20:45:40.809Z"
+type: "MARKDOWN_NOTE"
+folder: "215fa5a16133e660c7c9"
+title: "Docker Compose"
+content: '''
+  # Docker Compose
+  
+  Docker Compose is a CLI tool that is installed when you install Docker.  It allows you to "compose" multiple Docker containers together that you would have to otherwise have to startup individually using the Docker Client.
+  
+  ### Docker Compose Client
+  
+  ```bash
+  $  docker-compose up
+  ```
+  Runs the *docker-compose.yml* file, creating all containers specified in the and wiring up any networking specified.
+  * `--build` flag: builds services specified in the *docker-compose.yml* file
+  * `-d` flag: launch in the background
+  
+  ---
+  
+  ```bash
+  $  docker-compose down
+  ```
+  Stops all containers specified in your *docker-compose.yml* file.  This is just a more convient way of stopping all of the containers instead of having to run `docker stop <contiainer-id>` for each container.
+  
+  ### Docker Compose File
+  
+  A Docker Compose file is a YAML file in your repository called *docker-compose.yml*.
+  
+  ##### Example
+  
+  ```yaml
+  version: '3',
+  services:
+    <container-1-name>:
+      image: '<container-1-image>'
+    <container-2-name>:
+      build: .
+      ports:
+        - "<local-port>:<container-port>" # dash signifies a list
+  ```
+  
+  ##### Creating a Docker Compose File
+  
+  ```yaml
+  version: '3'
+  ```
+  Specifies the version of Docker Compose that we are using
+  
+  ---
+  
+  ```yaml
+  services:
+    <container-1-name>:
+      image: '<container-1-image>'
+    <container-2-name>:
+      build: .
+      ports:
+        - "<local-port>:<container-port>" # dash signifies a list
+  ```
+  The group of containers that we are *composing* together.  For each *service*, you will either specify the image to use to create the container, or the location of the build context in order to build a container.  An configuration required for a service will also be located in that service's block, such as the ports to forward (shown above)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
