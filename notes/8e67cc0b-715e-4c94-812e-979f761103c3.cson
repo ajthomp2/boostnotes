@@ -1,0 +1,22 @@
+createdAt: "2018-12-08T21:52:06.301Z"
+updatedAt: "2018-12-08T22:12:32.438Z"
+type: "MARKDOWN_NOTE"
+folder: "37dbbd82b3e5896fa920"
+title: "ASG (Auto Scaling Group)"
+content: '''
+  # ASG (Auto Scaling Group)
+  
+  ASGs allow you to *scale-out* EC2 instances when there is an increased load or *scale-in* EC2 instances when the load is decreased.  You can also ensure a minimum and maximum number of instances and automatically register new instances to a ELB.
+   *  When creating an ASG, you need to specify *Launch Configurations*, which are composed of the characteristics of the EC2 instance to spin-up, min and max number of instances, ELB info, network and subnet info, and a scaling policy.
+   *  Possible to scale an ASG using CloudWatch alarms.  The CloudWatch alarm watches a specific metric (such as CPU % usage) that is averaged across all EC2 instances in the ASG.
+   *  It is now possible to define *better* auto-scaling rules that are directly managed by EC2.  Examples of these *better* rules are target average CPU usage, number of requests on an ELB per instance, or average network in/out.  There are pre-configured metrics, but you can also create your own custom metrics, such as having an application use the PutMetric API to send the number of connected users to CloudWatch.
+  
+  # Misclaneous
+   *  ASGs are free.  You are only paying for the underlying reasources being launched
+   *  IAM roles attached to an ASG will be assigned to the EC2 instances that are spun up
+   *  ASGs will automatically restart EC2 instances that are terminated for whatever reason
+   *  ASGs will automatically terminate EC2 instances deemed unhealthy and restart a new instance
+'''
+tags: []
+isStarred: false
+isTrashed: false

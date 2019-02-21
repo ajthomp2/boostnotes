@@ -1,0 +1,35 @@
+createdAt: "2018-12-09T20:04:29.421Z"
+updatedAt: "2018-12-09T20:40:08.181Z"
+type: "MARKDOWN_NOTE"
+folder: "37dbbd82b3e5896fa920"
+title: "EBS (Elastic Block Store) Volume"
+content: '''
+  # EBS (Elastic Block Store) Volume
+  
+  An EBS Volume is a place to store drive data for EC2 instances incase an EC2 instance is terminated unexpectedly.
+   *  A network drive (not a physical drive), so there is a bit of latency, and also uses IO, so backups shouldn't be run while your app is handling a lot of traffic
+   *  Can be easily detached from one EC2 instance and attached to another
+   *  Locked to an availability zone (AZ)
+   *  Type of EBS volumes based on storage amount (GB), throughput (MB/s), and speed (IOPS)
+   *  Can attach multiple EBS volumes to the same instance, but an EBS volume can only be attached to one instance
+   *  You can resize (GB and IOPS), but you need to repartition after resizing
+   *  EBS Snapshots: how you backup data from an EBS volume.  It will only be the size of the space used in the EBS volume. Great for creating backups and migrating to new volumes.
+   *  Terminated by default when an EC2 instance is terminated, but that can be disabled
+  
+  ### Encrypted EBS Volume
+   *  All data is encrypted both at rest and in flight
+   *  Snapshots of the data are encrypted, and new volumes created from that snapshot are also encypted
+   *  AWS handles the encryption and decryption
+   *  Minimal latency impact
+   *  Uses KMS (AES-256) keys for encyption
+   *  Copying an unecryption volume using a snapshot allows for encryption
+  
+  ### Instance Store
+   *  Some EC2 instances come with an Instance Store instead of an EBS Volume
+   *  Physical drive attached to your EC2 instance
+   *  Better IO performance, but data is lost on termination and you can't resize the drive, so backup needs to be done manually
+   *  Only really used for extreme performance requirements
+'''
+tags: []
+isStarred: false
+isTrashed: false

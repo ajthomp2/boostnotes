@@ -1,0 +1,31 @@
+createdAt: "2018-11-21T23:37:46.926Z"
+updatedAt: "2018-11-21T23:52:31.206Z"
+type: "MARKDOWN_NOTE"
+folder: "37dbbd82b3e5896fa920"
+title: "IAM (Identity and Access Management)"
+content: '''
+  # IAM (Identity and Access Management)
+  
+  ### Introduction
+  
+  All of your AWS security will be contained within AIM.  This includes Users, Groups, and Roles, which are all created by Policies, which are JSON documents that define what each User, Group, or Role does. IAM has a global view, which means that any permissions apply across all AWS regions. When you first create an account, a root account will be created for you, but you should not use it after intitial setup.
+  
+  ### Users
+  
+  A user is usually a physical person.  IAM credentials should never be shared and never be entered into your codebase.
+  
+  ### Groups
+  
+  Groups contain users.  Users can be grouped in any way you want, like by function or by team.
+  
+  ### Roles
+  
+  Only for machines.  Roles are the permissons that machines have for usage of internal AWS resources.  You should only have one Role per application.
+  
+  ### Misclaneous
+   *  Least Privilege Principle: Users should be given the mininimum amount of permissions they need to perform their jobs
+   *  IAM Federation: Allows big enterprises to integrate their own repository of users into AIM so that users can log in using their company credentials.  This uses the SAML standard
+'''
+tags: []
+isStarred: false
+isTrashed: false

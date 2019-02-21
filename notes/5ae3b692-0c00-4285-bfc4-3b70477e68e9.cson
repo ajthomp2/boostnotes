@@ -1,5 +1,5 @@
 createdAt: "2018-11-20T19:23:44.128Z"
-updatedAt: "2018-11-20T20:45:40.809Z"
+updatedAt: "2018-11-30T15:20:01.401Z"
 type: "MARKDOWN_NOTE"
 folder: "215fa5a16133e660c7c9"
 title: "Docker Compose"
@@ -23,6 +23,13 @@ content: '''
   $  docker-compose down
   ```
   Stops all containers specified in your *docker-compose.yml* file.  This is just a more convient way of stopping all of the containers instead of having to run `docker stop <contiainer-id>` for each container.
+  
+  ---
+  
+  ```bash
+  $  docker-compose ps
+  ```
+  Similar to the command `docker ps` except that it'll only look for running processes that are specified in the *docker-compose.yml* file in the current directory.
   
   ### Docker Compose File
   
@@ -55,9 +62,15 @@ content: '''
     <container-1-name>:
       image: '<container-1-image>'
     <container-2-name>:
-      build: .
+      build:
+        context: .
+        dockerfile: <dockerfile-name>
+      restart: on-failure
       ports:
         - "<local-port>:<container-port>" # dash signifies a list
+      volumes:
+        - <container-path>
+        - <local-path>:<container-path>
   ```
   The group of containers that we are *composing* together.  For each *service*, you will either specify the image to use to create the container, or the location of the build context in order to build a container.  An configuration required for a service will also be located in that service's block, such as the ports to forward (shown above)
   

@@ -1,0 +1,57 @@
+createdAt: "2019-01-15T15:46:29.056Z"
+updatedAt: "2019-01-15T17:31:19.379Z"
+type: "MARKDOWN_NOTE"
+folder: "0277664dedb48ee90e3d"
+title: "Gradle Under the Hood"
+tags: []
+content: '''
+  # Gradle Under the Hood
+  
+  ### Gradle Object Model
+  
+  Before Gradle runs any of the scripts that you create in order to build and/or configure your project, it first instantiates objects behind the scenes that contain both methods and properties that you can use while the script runs. Another way of looking at it is that you are actually configuring an object that Gradle will then use to build your project.  The object you are configuring in a script is called the *delegate object* for the script.  Each of these delegate objects implements specific interfaces, and there are 6 key interfaces that Gradle uses.  All of the properties and methods contained in these interfaces are available to be used directly within your script. All delegate objects can be referred to directly in your script.
+  
+  ###### Script Interface
+  
+  All Gradle scripts (files that end in .gradle) implement this interface.  A Script Object will also generally have a delegate object *attached* to it, which means that if a property or method you are trying to use directly in your script isn't found in the Script object, it will be forwarded to the delegate object to see if it exists there.
+  
+  ###### Project Interface
+  
+  The interface implemented by the delegate object instantiated before running your *build.gradle* file. It is attached to the Script object. The Project object also has access to the Gradle object.
+  
+  ###### Gradle Interface
+  
+  The interface implemented by the delegate object instantiated before running any init scripts (except for the settings.gradle script). It is attached to the Script object.  No matter where you are in the Gradle lifecycle, you will always have access to the Gradle object.
+  
+  ###### Settings Interface
+  
+  The interface implemented by the delegate object instantiated before running your *settings.gradle* file. It is attached to the Script object.  The Settings object also has access to the Gradle object.
+  
+  ###### Task Interface
+  
+  ###### Action Interface
+  
+  ### Gradle Lifecycle
+  
+  Gradle has 3 lifecycle phases: initialization, configuration, and execution.
+  
+  ###### Initialization
+  
+  The init.gradle (first) and settings.gradle (second) files are executed here. Other files ending in *.gradle* can also be executed here if they are located in the $HOME/.gradle/init.d directory. As a whole these are referred to as *init scripts*. These files allow you to set up various configurations and environments before your build script is run.  You can also create a *gradle.properties* file, which is a list of key-value pairs (seperated by an "=") and these properties can then be accessed within your scripts directly.
+  
+  ###### Configuration
+  
+  Configuration is done using a *build.gradle* file. Each project in your build will have its own *build.gradle* file.
+  
+  ###### Execution
+  
+  Build gets performed.
+  
+  ### Properties
+  
+  Properties can be added to almost any Gradle object and is a great way of setting configuration/environment variables in one part of the script that can be accessed in another part.  There are a bunch of ways of setting properties, including creating a *gradle.properties* file, which is just a list of "=" seperated key-value pairs, using the command line, or adding the property to what is called the *extra properties extension* object.  The *extra properties extension* interface is implemented by most of the Gradle Object Model objects, and to add a property to this object, you write `<object>.ext.<propertyName> = <propertyValue>`.  It is good practice to use the *hasProperty* method to check whether a property exists on an object before using it.
+  
+  ### Tasks and Actions
+'''
+isStarred: false
+isTrashed: false

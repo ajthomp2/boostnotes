@@ -1,0 +1,19 @@
+createdAt: "2018-12-08T21:07:51.373Z"
+updatedAt: "2018-12-08T21:09:16.227Z"
+type: "MARKDOWN_NOTE"
+folder: "37dbbd82b3e5896fa920"
+title: "Basics"
+content: '''
+  # Basics
+  
+  ### Regions and Availability Zones
+  
+  Regions and Availability Zones: A region is an area where AWS has physical servers generally located, for example *us-east-1*.  Each region then has Availability Zones, which are the specific and isolated datacenters that house these physical servers, and a denoted as the region name followed by a letter, such as *us-east-1a*.  There are a minimum of 3 AZ's per region, and every service except of S3 and IAM are per region.
+  
+  ### IPv4, IPv6, and Elastic IPs
+   *  IPv4 vs IPv6: IPv4 is older and is 4 numbers seperated by a dot.  IPv6 is newer and is a series of hexidecimal numbers seperated by colons.  IPv6 mostly solves IOT issues.  Private companies can also have private IP addresses, which can be accessed via a gateway, which itself has an IP address.  An EC2 instance comes with both a public IP address for the web and a private IP address for communicating inside AWS.  When you stop an AWS instance, you public IP address will be lost but your private will stay.
+   *  Elastic IP: Only necessary if you need a fixed IP address, which is pretty rare.  You can only have 5 Elastic IP addresses per AWS account (but you can request more).  They are typically used to mask failure of an instance because you can move an Elastic IP address from one IP to another.  Typically good to avoid Elastic IPs.
+'''
+tags: []
+isStarred: false
+isTrashed: false

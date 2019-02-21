@@ -1,0 +1,21 @@
+createdAt: "2019-01-17T20:31:05.347Z"
+updatedAt: "2019-01-17T22:11:19.669Z"
+type: "MARKDOWN_NOTE"
+folder: "1128976b08c3646fed15"
+title: "Project Notes"
+tags: []
+content: '''
+  # Project Notes
+  
+  ### Validators
+  
+   * generally need to clean up validators
+   * need to find a way to pass in other column ids as parameters so I can make the validators more generic; may not be needed depending on the number/uniqueness of the other validators, but something to keep in mind
+   * may still need to work on async validation implementation.  On long API calls, selected cell outline can "hang", so I'll need to test and maybe figure out a better solution
+  
+  ### Renderers
+  
+   * need to use a renderer to set validitity of a cell only if the value in that cell needs to be changed as well.  Value can be changed within a validator, but it then sets off an infinite loop of validation b/c validator is called after value is set
+'''
+isStarred: false
+isTrashed: false

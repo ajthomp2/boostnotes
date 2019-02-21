@@ -1,0 +1,17 @@
+createdAt: "2018-11-30T14:46:14.099Z"
+updatedAt: "2018-11-30T15:06:07.776Z"
+type: "MARKDOWN_NOTE"
+folder: "215fa5a16133e660c7c9"
+title: "Docker Workflow"
+content: '''
+  # Docker Workflow
+  
+  ### Dockerfiles for Different Environments
+  You will most likely like want to create a Dockerfile for each environment that your application will be deployed to because, among other things, you might want to set different environment variables, have different startup commands, and/or have different startup commands.  You can create Dockerfiles for different environments, with each file called *Dockerfile.<env>*, where *env* is the environment.  Your production Dockerfile will just be called *Dockerfile*.
+  
+  ### Docker Volume
+  A Docker volume is a reference from a folder outside a Docker Container to a folder inside a Docker Container.  This can be useful if you are running a Docker Container and would like to be able to edit files being used inside that container without having to recreate that container all over again.  A common usecase is simulating *hot-reload* when developing web applications.  To create a Docker Volume, you use the `-v` flag (example on The Docker Client page).
+'''
+tags: []
+isStarred: false
+isTrashed: false

@@ -1,0 +1,53 @@
+createdAt: "2018-11-26T00:01:18.990Z"
+updatedAt: "2018-11-26T00:30:49.782Z"
+type: "MARKDOWN_NOTE"
+folder: "37dbbd82b3e5896fa920"
+title: "ELB (EC2 Load Balancer)"
+content: '''
+  # ELB (EC2 Load Balancer)
+  
+  ELB is a managed load balancer that will sit infront of your EC2 instances.  It is called managed because AWS takes care of upgrades, maintenance, and high avaiilability.  You will only be able to configure a few things.  AWS provides 3 types of load balancers (AWS recommends only using v2 now):
+   *  Classic (v1 - old generation)
+   *  Application (v2 - new generation)
+   *  Network (v2 - new generation)
+  All load balancer types  have a static host name that should always be used.  You should not use the underlying IP.  Load balancers scale a bit, but not indefinitely.  A 503 error means a load balancer error and means that the load balancer is either at capacity or that there is no registered target to forward to.
+  
+  ### Load Balancer
+  A load balancer is a server that forwards internet traffic to multiple servers downstream.
+  Advantages:
+   *  Load spreading
+   *  Single access point (DNS)
+   *  Seamless failure handling (load balancer will only send traffic to *healthy* servers)
+   *  Handle HTTPS (SSL)
+   *  Handle cookie sickiness (same client will always be sent to same server)
+   *  High availability across many zones
+   *  Seperate public from private traffic
+  
+  ##### Health Checks
+  Health check is an HTTP call make from the load balancer to a port and route on a server.  This is typically /health.  Any response that is not 200 OK is considered *unhealthy*
+  
+  ### Application Load Balancer (v2)
+   *  Application Load Balancers (ALBs) allow you to load balance multiple HTTP applications across machines (target groups, which are groups of EC2 instances).  You can also load balance multiple applications on the same machine
+   *  Load balancing can be done base on the URL route or based on the hostname
+   *  This is much easier than using a Classic Load Balancer (v1), where you would need to create a load balancer per application
+   *  Stickiness is at the target group level, and is handled by the ALB
+   *  ALBs support HTTP/HTTPS and Websockets
+   *  The ALB sends the clients IP to the server using the *X-Forwared-For* header, and sends the port and proto via the *X-Forwarded-Port* and *X-Forwared-Proto* headers
+  
+  ### Network Load Balancer (v2)
+   *  Lower level than the ALB and are used to handle TCP traffic
+   *  Are typically used when high performance is needed, because they can handle millions of requests per second and have less latency (~100 ms vs ~400 ms for ALB)
+   *  The server will see the clients IP address directly instead of it being cpied to a header
+  
+  
+  
+  
+  
+  
+  
+  
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false

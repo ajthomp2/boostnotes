@@ -1,0 +1,17 @@
+createdAt: "2018-12-03T19:20:36.537Z"
+updatedAt: "2018-12-08T21:36:06.975Z"
+type: "MARKDOWN_NOTE"
+folder: "9ed910a0d1d104fb13a4"
+title: "EMT2 Questions"
+content: '''
+  # EMT2 Questions
+  
+  1. What is the format of the vendor data?
+      * standard format/order?
+      * standard set of columns?
+  2. Thoughts on uploading excel document instead of copying and pasting data into app?
+  3. How long will applying QC rules take?  If the user is copying/uploading hundreds of entries, will making the API calls take a while?
+'''
+tags: []
+isStarred: false
+isTrashed: true

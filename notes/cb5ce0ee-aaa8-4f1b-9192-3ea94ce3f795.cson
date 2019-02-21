@@ -1,0 +1,281 @@
+createdAt: "2019-02-18T16:00:57.467Z"
+updatedAt: "2019-02-18T22:51:35.468Z"
+type: "MARKDOWN_NOTE"
+folder: "1128976b08c3646fed15"
+title: "API Documentation"
+tags: []
+content: '''
+  # API Documentation
+  
+  ## Manifest
+  
+  Path to work with a specific manifest.
+  
+  ##### GET /api/emma/manifest/:userId/:id
+  
+  Get manifest data.
+  
+  ###### Queries:
+  
+  Get manifest data:
+  ```SQL
+  SELECT m.MANIFEST_ID, m.TEMPLATE_ID, m.NAME, m.CURRENT_DATA
+  FROM MAPOR.BR_MANIFEST m
+  WHERE m.MANIFEST_ID = :1
+  ```
+  
+  Get manifest metadata:
+  ```SQL
+  SELECT MD.VOCAB_FORM_ATTR_ID, MD.UI_NAME, MD.DATA_TYPE, MD.DATA_PRECISION, MD.DATA_SCALE, MD.CHAR_LENGTH, TC.REQUIRED, TC.PREPOPULATE, TC.UI_TYPE
+  FROM MAPOR.BR_TEMPLATE_COLUMN TC
+  JOIN MAPOR.BR_COL_METADATA MD ON MD.VOCAB_FORM_ATTR_ID = TC.VOCAB_FORM_ATTR_ID
+  WHERE TEMPLATE_ID = :1
+  ```
+  
+  ```SQL
+  SELECT QC.NAME, QC.GRANULARITY, QC.ERROR_MESSAGE, CQC.QC_PARAMS, QC.DESCRIPTION
+  FROM MAPOR.BR_COLUMN_QC CQC
+  JOIN MAPOR.BR_QC QC ON QC.QC_ID = CQC.QC_ID
+  WHERE CQC.VOCAB_FORM_ATTR_ID = :1
+  ```
+  
+  ###### Response:
+  ```
+  {
+    id: number;
+    externalId: number;
+    templateId: number;
+    name: string;
+    ownerId: string;
+    vendor: string;
+    therapeuticArea: string;
+    data:  
+    {
+      id: number;
+      value: string | number;
+      metadata: {
+        name: string;
+        dataType: string;
+        dataPrecision: string;
+        dataScale: string;
+      };
+      templateColumnData: {
+        required: boolean;
+        prePopulate: boolean;
+        uiType: string;
+      };
+      columnQcRules: {
+        name: string;
+        granularity: string;
+        errorMessage: string;
+        description: string;
+      }[];
+    }[];
+  }
+  ```
+  
+  
+  ##### POST /api/emma/manifest/:userId/:id
+  
+  Save manifest data.
+  
+  ###### Query
+  
+  ```SQL
+  UPDATE MAPOR.BR_MANIFEST
+  SET CURRENT_DATA = :1, UPDATE_USER = :2, UPDATE_DATE = CURRENT_TIMESTAMP
+  WHERE MANIFEST_ID = :3
+  ```
+  
+  ###### Body
+  
+  ```JSON
+  {
+    id: number; // vocab_form_attr_id
+    value: number | string;
+  }[]
+  ```
+  
+  
+  ##### POST /api/emma/manifest/:userId
+  
+  Create manifest.
+  
+  ###### Query
+  
+  ```SQL
+  INSERT INTO MAPOR.BR_MANIFEST (MANIFEST_ID, EXTERNAL_ID, TEMPLATE_ID, NAME, OWNER_511, VENDOR, THERAPEUTIC_AREA, INSERT_USER, INSERT_DATE)
+  VALUES (:1, :2, :3, :4, :5, :6, :7, :8, CURRENT_TIMESTAMP)
+  ```
+  
+  ###### Body
+  
+  ```JSON
+  {
+    externalId: number;
+    templateId: number;
+    name: string;
+    ownerId: number;
+    vendor: string;
+    therapeuticArea: string;
+  }
+  ```
+  
+  ###### Response
+  
+  ```JSON
+  {
+    manifestId: number;
+  }
+  ```
+  
+  
+  ##### DELETE /api/emma/manifest/:userId/:id
+  
+  Not implemented.  Not sure if this is a use case or not, I just assumed it was so I created the endpoint for it anyway.
+  
+  
+  ## Manifests
+  
+  Get manifests based on userId/ownerId. For use on dashboard to list all manifests that a user has started/completed.
+  
+  ##### GET /api/emma/manifests/:ownerId
+  
+  Not implemented yet. Not sure if getting every manifest ever created for a user is a use case.
+  
+  ##### GET /api/emma/manifests/:ownerId/incomplete
+  
+  Get all incomplete manifests so a user can select one to continue to work on.
+  
+  ###### Query
+  
+  ```SQL
+  SELECT m.MANIFEST_ID, m.TEMPLATE_ID, m.NAME
+  FROM MAPOR.BR_MANIFEST m
+  WHERE m.OWNER_511 = :1
+  AND m.START is not null
+  AND m.DATA_ENTRY is not null
+  AND m.TEST is null
+  AND m.PROD is null
+  AND m.COMPLETE is null
+  ```
+  
+  ###### Response
+  
+  ```JSON
+  {
+    Id: number;
+    templateId: number;
+    name: string;
+  }[];
+  ```
+  
+  ##### GET /api/emma/manifests/:ownerId/complete
+  
+  Not implemented yet.  Also not sure if this is a use case or not, but could be useful if scientists want to review past completed manifests.
+  
+  
+  ## Template
+  
+  ##### POST /api/template/:userId
+  
+  Save template.
+  
+  ###### Queries
+  
+  Insert template data:
+  ```SQL
+  INSERT INTO MAPOR.BR_TEMPLATE (TEMPLATE_ID, NAME, ONE_OFF, RETIRED, INSERT_USER, INSERT_DATE)
+  VALUES (:1, :2, :3, :4, :5, CURRENT_TIMESTAMP)
+  ```
+  
+  Insert template column data:
+  ```SQL
+  INSERT INTO MAPOR.BR_TEMPLATE_COLUMN (TEMPLATE_COLUMN_ID, TEMPLATE_ID, VOCAB_FORM_ATTR_ID, REQUIRED, PREPOPULATE, REFINED_VOCAB, UI_TYPE, INSERT_USER, INSERT_DATE)
+  VALUES (MAPOR.EFO_SEQ.NEXTVAL, :1, :2, :3, :4, :5, :6, :7, CURRENT_TIMESTAMP)
+  ```
+  
+  ###### Body
+  
+  ```JSON
+  {
+    name: string;
+    oneOff: boolean;
+    retired: boolean;
+    columns: {
+      vocabFormAttrId: number;
+      required: boolean;
+      prePopulate: boolean;
+    }[];
+  }
+  ```
+  
+  ###### Response
+  
+  ```JSON
+  {
+    templateId: number;
+  }
+  ```
+  
+  ##### GET /api/template/columns
+  
+  Get all template column information for use in creating new templates.
+  
+  ###### Query
+  
+  ```SQL
+  SELECT VOCAB_FORM_ATTR_ID, UI_NAME, UI_GROUP_PARENT
+  FROM MAPOR.BR_COL_METADATA
+  ```
+  
+  ###### Response
+  
+  ```JSON
+  {
+    id: number;
+    name: string;
+    requiredDefault: boolean;
+    prePopulateDefault:boolean;
+    children?: {
+      id: number;
+      name: string;
+      requiredDefault: boolean;
+      prePopulateDefault:boolean;
+    }[];
+  }
+  ```
+  
+  
+  ## StarLIMs/QC
+  
+  ##### GET /api/starlims/uniqueSample?orderFillerNumber=&externalName=&trialCode=
+  
+  Unique sample validation endpoint.
+  
+  ##### Query
+  
+  ```SQL
+  SELECT count(*) uniquecount
+  FROM abt_sst.centralreceiving cr, abt_sst.trial t, abt_sst.subjects s, abt_sst.rasclients rc
+  WHERE cr.subjectid = cast(s.subject_id as varchar(255))
+  AND cr.trial_id = t.trial_id
+  AND cr.rasclientid = rc.rasclientid
+  AND cr.orderfillernumber = cast(:1 as varchar(255))
+  AND s.external_name = cast(:2 as varchar(255))
+  AND t.trial_code = :3
+  ```
+  
+  ###### Response
+  
+  ```JSON
+  {
+    count: number
+  }
+  ```
+  
+  
+'''
+linesHighlighted: []
+isStarred: false
+isTrashed: false

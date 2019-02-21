@@ -1,5 +1,5 @@
 createdAt: "2018-11-18T17:19:58.626Z"
-updatedAt: "2018-11-20T15:26:31.496Z"
+updatedAt: "2018-12-02T16:59:26.855Z"
 type: "MARKDOWN_NOTE"
 folder: "215fa5a16133e660c7c9"
 title: "The Docker Client"
@@ -30,6 +30,8 @@ content: '''
   Runs the image *image-name*, which creates a container based on the image and starts the program that the image runs. If you type a command after the image name, that command will be run instead of the normal image startup command.  `docker run` is equivalent to running `docker create` followed by `docker start`. 
     * `-it` flag: connects your terminal's STDIN and STDOUT to the containers STDIN and STDOUT so you can enter and see the responses from commands.
     * `-p <localhost-port>:<container-port>` flag: route incoming requests on the port *localhost-port* to the port in the container *container-port*
+    * `-v <local-path>:<container-path>` flag: Used to create a volume between your *local-path* and the *container-path*.  Both are absolute paths
+    * `-v <container-path>` flag: Tells Docker to not try to create a volume for this path.  A common usecase for this is when you don't have a local copy of a node_modules folder (your Dockerfile npm installs that for you in the container), and therefore you would not like to create a reference
   
   ---
   
@@ -59,6 +61,7 @@ content: '''
   ```
   Builds an image based on a dockerfile and the files in *directory*.  The directory is called the build context.
     * `-t <docker-id>/<project-name>:version` flag: tags the new image as *your-docker-id/project:version*.  When running the image, you can leave off the version.  If you don't specify a version, it will automatically be *latest*
+    * `-f <filename>` flag: specify filename to use if the Dockerfile is not simply called just *Dockerfile*.  Useful for using different Dockerfiles for different environments
   
   ---
   
@@ -81,6 +84,13 @@ content: '''
   ```
   Lists all running Docker containers. 
     * `--all` flag: lists all running and stopped containers
+  
+  ---
+  
+  ```bash
+  $  docker attach <container-id>
+  ```
+  Attaches your terminal to the terminal of the main process of *containter-id* (stdin, stdout, and stderr)
   
   ---
   

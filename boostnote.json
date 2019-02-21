@@ -9,6 +9,36 @@
       "key": "215fa5a16133e660c7c9",
       "color": "#B013A4",
       "name": "Docker"
+    },
+    {
+      "key": "58d1b220d1fe0e577f14",
+      "color": "#FF8E00",
+      "name": "Spark"
+    },
+    {
+      "key": "37dbbd82b3e5896fa920",
+      "color": "#E10051",
+      "name": "AWS"
+    },
+    {
+      "key": "c41f4f2528442934e948",
+      "color": "#3FD941",
+      "name": "MySQL"
+    },
+    {
+      "key": "1128976b08c3646fed15",
+      "color": "#2BA5F7",
+      "name": "EMT2"
+    },
+    {
+      "key": "0277664dedb48ee90e3d",
+      "color": "#2BA5F7",
+      "name": "Gradle"
+    },
+    {
+      "key": "16cd708b3a755c1a01aa",
+      "color": "#2BA5F7",
+      "name": "PIKM"
     }
   ],
   "version": "1.0"

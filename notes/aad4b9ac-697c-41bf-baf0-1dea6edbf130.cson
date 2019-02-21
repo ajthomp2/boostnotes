@@ -1,0 +1,53 @@
+createdAt: "2018-11-22T00:36:50.695Z"
+updatedAt: "2018-12-08T21:09:10.657Z"
+type: "MARKDOWN_NOTE"
+folder: "37dbbd82b3e5896fa920"
+title: "EC2 (Elastic Cloud Compute)"
+content: '''
+  # EC2 (Elastic Cloud Compute)
+  
+  ### Introduction
+  EC2 is a service that allows users to dynamically allocate server space (virtual computing environment or instance) with a variety of different templates (AMIs).
+  
+  ### EC2 Instances
+  EC2 instances are server configurations in AWS.  They have 5 distinct characteristics: RAM, CPU, I/O, network, and GPU.  There are also instance types that specialize in specific aspects of the above characteristics.  One of the most common types are T2j instances (mainly because they are free tier eligable).  T2 instances are known as *burstable* because when the CPU experiences a heavy load, they can *burst*, or increase the amount of CPU the instance has by using *burst credits*, and the machine will continue to *burst* until all of the credits are used and the CPU becomes *bad*.
+  
+  ### Security Groups
+  Controls how network traffic is allowed into and out of your EC2 instances.  It is the *firewall* on your ec2 instances.  Allows inbound and outbound traffic based on IP address and port.  
+   *  Security groups can be attached to multiple instances and multiple security groups can be attached to one instance
+   *  Security groups are unique to a region/VPC combination
+   *  Lives *outside* an EC2 instance, which means that an instance wont know at all about any traffic coming in or if traffic is not recieved by a user going out.
+   *  If an application gets a timeout error, its usually a security group issue, while a connection refused error means that its probably an application error
+   *  By default, all inbound traffic is block and all outbound traffic is allowed
+   *  Can allows allow access between instances based solely on security groups, without having to specify an IP/port
+  
+  ### EC2 User Data
+  An EC2 User Data script is used to automate boot tasks, which are tasks run when the instance is created.  The script is a shell script that runs as the root user.
+   *  Boostrapping: launching commands when an instance first starts
+   *  Examples of boot tasks:
+      *  Installing updates
+      *  Installing software
+      *  Downloading files from the internet
+    *  To add a User Data Script, you attach it under *Step 3: Configure Instance Details* when creating a new instance.  It is found at the bottom of the page under *Advanced Details*.
+  
+  ### Misclaneous
+   *  AMI: Stands for Amazon Machine Intance.  A template that contains an operating system, application server, and applications for launching an instance.  You can also create a custom AMI or use someone else's cusom AIM.  Custom AMI's are region specific.
+   *  Pricing:  Pricing is shown as per hour, but you are billed by the second.  There are a ton of factors that can change the price of the instance you are using, including the region, type of instance, OS, type of host, storage, load balancing, data transfer, ect.  You don't have to pay when the instance is stopped.
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false

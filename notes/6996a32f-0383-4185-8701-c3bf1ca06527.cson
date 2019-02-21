@@ -1,0 +1,59 @@
+createdAt: "2018-12-10T15:48:13.437Z"
+updatedAt: "2018-12-10T21:37:27.428Z"
+type: "MARKDOWN_NOTE"
+folder: "1128976b08c3646fed15"
+title: "POC"
+content: '''
+  # POC
+  
+  ### Overview
+  
+  Study   string, mandatory
+  Sample    string, mandatory
+  Subject   string, mandatory
+  Mass   number
+  Volume   number
+  Date  datetime
+  
+  QC:
+  
+  1.  Sample must be unique.
+  2.  The sample must not already be present in StarLIMs.   (I’ll have to get you the RO credentials and query)
+  3.  Both Mass and Volume should not be populated at the same time.  (both NULL or only one populated)
+  4.  If only a year is provided for the Date, then the month and day both default to 1. 
+  5.  If only year and month is provided for the Date, then the day defaults to 1.
+  
+  FYI:
+  
+  1.  Subjects can have more than one Sample
+  2.  Study will be pre-populated
+  
+  I have also attached the full set of QC rules I scribbled up.  Please note that many of these will no longer be needed, but I just wanted to be sure you have a general idea.
+  
+  ### Unique Sample
+  
+  Production:
+  UQ00354P/SSTXUNP1/1521
+  user    abt\\_sst\\_ro_user
+  
+  QA (for development):
+  UQ00359D/SSTXUNQ1/1521
+  user   abt\\_sst\\_ro_user
+  password ro_read_only_p1
+  
+  Here is the query to see if a sample has already been loaded into the Biorepo:
+  
+  select count(*) uniquecount
+  from abt\\_sst.centralreceiving cr, abt\\_sst.trial t, abt\\_sst.subjects s, abt\\_sst.rasclients rc
+  where cr.subjectid = cast(s.subject_id as varchar(255))
+  and cr.trial\\_id = t.trial\\_id
+  and cr.rasclientid = rc.rasclientid
+  and cr.orderfillernumber = cast(? as varchar(255))   --< sample
+  and s.external_name = cast(? as varchar(255))  --< subject
+  and t.trial_code = ? --< study
+  
+  There are actually 2 more predicates for this query, but they may not be relevant with the new data flow.  regardless, this should be fine for POC.  uniquecount = 0 is true, anything else is false.
+'''
+tags: []
+isStarred: false
+isTrashed: false

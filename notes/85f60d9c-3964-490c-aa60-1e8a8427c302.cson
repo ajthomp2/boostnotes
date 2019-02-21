@@ -1,0 +1,13 @@
+createdAt: "2019-01-15T15:39:03.812Z"
+updatedAt: "2019-01-15T15:43:26.505Z"
+type: "MARKDOWN_NOTE"
+folder: "0277664dedb48ee90e3d"
+title: "What is Gradle?"
+tags: []
+content: '''
+  # What is Gradle?
+  
+  Gradle is a build automation tool.  You write a script using a DSL in either Groovy or Kotlin.  Gradle can be used to build projects written in a variety of different languages, including C++, Javascript, but it's most popular for building JVM language projects like Java and Kotlin.
+'''
+isStarred: false
+isTrashed: false

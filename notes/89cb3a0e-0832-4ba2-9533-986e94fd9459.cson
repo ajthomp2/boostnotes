@@ -1,0 +1,73 @@
+createdAt: "2019-02-20T16:01:04.454Z"
+updatedAt: "2019-02-21T17:29:13.955Z"
+type: "MARKDOWN_NOTE"
+folder: "16cd708b3a755c1a01aa"
+title: "Documentation"
+tags: []
+content: '''
+  # Documentation
+  
+  ## pikm-search-base
+  
+  Frontend of PIKM search application
+  
+  #### General Info
+  
+  Information about the project structure and location of functionality within the project.
+  
+  * All of the components that make up the front page and the results page as well as the component that wraps the entity cards are located in the components and containers directory.
+  * All of the models (classes and interfaces) used anywhere within the application are contained in the models directory
+  * The modules directory holds all of the entity cards, as well as the authentication code and Jiapings recent additions (structure search and subscription).
+  * The services directory holds all the code that connects this frontend to the middle-tier (pikm-ws) as well code that shouldn't have been placed in a component (redirect from classic urls, logging, cookie stuff, etc.).
+  * The store directory holds the NgRx code.  See the NgRx documentation below for more info.
+  
+  #### Libraries
+  
+  Information about libraries used in the application.
+  
+  * lodash, specificall lodash/fp, is used heavily within this application.  All of the documentation can be found [here](https://lodash.com/docs/4.17.11) and [here](https://github.com/lodash/lodash/wiki/FP-Guide). The majority of the code I wrote using this library uses the *_.flow* [operator](https://lodash.com/docs/4.17.11#flow). This operator takes an array of functions as input and returns a new function that *combines* all of the functions you pass in, meaning that it will pass the output of the previous function as the input of the next function, creating a *pipe* of operations.
+  * [date-fns](https://date-fns.org/) is the date/time library that is used in this application. Initially moment.js was used, but date-fns is a considerably smaller library than moment.js and has automatic tree-shaking leading to the library being a fraction of the size of moment.js when built for production.
+  * rxjs is also used heavily in this application. It comes built-in with all Angular applications and is used to handle asynchronous operations in your code. I used this library extensively, not just for REST calls, but also through the NgRx code and for websocket connections.
+  * NgRx (discussed below)
+  
+  #### Components
+  
+  ###### HomeContainerComponent
+  
+  The HomeContainerComponent is a container component that holds the top bar, search bar, and help/stats sidebars.  It also contains the *router-outlet*, which is unorthodox, but allowed for the smooth transition of the search bar from the home to the results page.
+  
+  ###### SearchComponent
+  
+  The SearchComponent is a container component (but still in the components directory by mistake) that holds the search bar and the filters below the search bar.
+  
+  ###### ResultsComponent
+  
+  The ResultsComponent holds the search results and filters on the results page. This component replaces the *router-outlet* when you navigate to the /results path.  There is a lot of functionality in this component, but all of it falls into three categories: selecting data from the NgRx store, dispatching actions to navigate to an entity page, and disptaching actions to update the search results.
+  
+  ###### Dynamic Container Components
+  There are two [dynamic container components](https://angular.io/guide/dynamic-component-loader). They are used to dynamically choose which component to inject into the tag in the html based on some piece of data. The *SearchResultContainer* chooses the correct search result component to use based on the type of search result it is (person, small molecule, document, etc).  The *ViewComponent* chooses which entity page should be used based on the route. This was done instead of using routing directly in order to create a universal wrapper around the entity results components for the topbar.
+  
+  #### NgRx
+  
+  [NgRx](https://ngrx.io/) is a state management library for Angular that uses the Flux pattern. It's used extensively throughout this project as both a frontend data store and state management library.  Any data (except for component specific data) that is used in the application is first added to the data store and then *piped* from the store into the component that needs it. All of the NgRx code is contained in the store directory in the project.
+  
+  NgRx is *connected* to the project using the StoreRouterConnectingModule, the StoreModule, and the EffectsModule. They can all be found in the app.module.ts file.
+  
+  The *index.ts* file in the store directory combines all of the feature data stores into a single general data store.  This allows for injecting a single *pipe* into any component so we can *push* data from any store into any component. The *selectors.ts* file in the store directory contains all of the *selectors* that need to combine data from more than one feature data store. The directories in the store directory each contain a feature data store.
+  
+  ###### Logger
+  
+  A metareducer (aka a reducer of reducers) which just simply logs the action and state before the action occurs to the console.  This functionality is removed in production (see the index.ts file in the store directory)
+  
+  ###### Router
+  
+  The router store is used for navigation within the app and wraps the Angular router. Instead of directly using the Angular router and dispatching actions from the NgOnInit function in the component that is being navigated to, router store exposes actions that are dispatched in order to both navigate to the correct path and dispatch any additional actions using effects. For example, in the results page, when a filter is selected, a *ResultsToResultsFilterSelectedNavigation* action is dispatched. This action is listened for in the router effects, where is creates the path and query params using the action payload and the current state of the store, and then dispatches the action *Go*, which calls *router.navigate*.  The router effects also listen for router navigation actions, and one of the effects is chosen based on the route and query params.  In this example, the path is */results* and the type query param is *document*, so the *documentSearchNavigationDispatcher* is called. This effect now dispatches all of the actions needed to get the new results and filters and store them in the store.
+  
+  #### Websockets
+  
+  The websocket protocol is used to get both the typeahead and entity search results.  The websocket code is located in the *entity-search.service.ts* file and the rxjs websocket wrapper is used in order to make connecting it to the existing code structure easy. There is one websocket for the typeahead and one websocket for the entity search results. When *getTypeahead* or *getResults* is called, the corresponding websocket is returned or instanciated, and then the data is sent to the server using *ws.next*. Then all of the results are *listened for* in the same way that REST responses are *listened for* by calling *subscribe*. It is important to unsubscribe from the websocket in order to sever the connection from the server.
+  
+'''
+linesHighlighted: []
+isStarred: false
+isTrashed: false
